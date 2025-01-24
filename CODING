@@ -1,0 +1,54 @@
+#BACKUP PROCESS 
+
+Connected to: Oracle Database 19c Enterprise Edition Release 19.0.0.0.0
+Starting "your_user"."SYS_EXPORT_FULL_01":  your_user/******** DIRECTORY=backup_dir DUMPFILE=backup_%U.dmp FULL=Y FILESIZE=1G
+Processing object type DATABASE_EXPORT/SCHEMA/TABLE/TABLE_DATA
+. . exported "your_user"."table_name"        15.7 MB   1023 rows
+Dump file set for your_user.SYS_EXPORT_FULL_01 is:
+  /path/to/backup/directory/backup_01.dmp
+  /path/to/backup/directory/backup_02.dmp
+Job "your_user"."SYS_EXPORT_FULL_01" successfully completed at DD-MMM-YYYY HH:MM:SS
+
+#RESTORE PROCESS 
+
+Connected to: Oracle Database 19c Enterprise Edition Release 19.0.0.0.0
+Starting "your_user"."SYS_IMPORT_FULL_01":  your_user/******** DIRECTORY=backup_dir DUMPFILE=backup_%U.dmp FULL=Y
+Processing object type DATABASE_EXPORT/SCHEMA/TABLE/TABLE_DATA
+. . imported "your_user"."table_name"        15.7 MB   1023 rows
+Job "your_user"."SYS_IMPORT_FULL_01" successfully completed at DD-MMM-YYYY HH:MM:SS
+
+#SQL*PLUS BACKUP/RECOVERY
+
+Backup Schema Data:
+When you execute the SPOOL command in SQL*Plus, the output file schema_backup.sql is generated.
+
+CREATE TABLE "table_name" (
+    "column1" NUMBER,
+    "column2" VARCHAR2(100)
+);
+INSERT INTO "table_name" VALUES (1, 'Sample Data');
+INSERT INTO "table_name" VALUES (2, 'More Data');
+
+Restore Schema Data:
+Executing @/path/to/backup/schema_backup.sql in SQL*Plus outputs:
+Table created.
+1 row inserted.
+1 row inserted.
+
+#RMAN BACKUP/RESTORE
+
+RMAN Backup Output:
+RMAN> BACKUP DATABASE PLUS ARCHIVELOG;
+Starting backup at DD-MMM-YYYY HH:MM:SS
+Using target database control file for backup
+Finished backup at DD-MMM-YYYY HH:MM:SS
+Backup complete.
+
+RMAN Restore Output:
+RMAN> RESTORE DATABASE;
+Starting restore at DD-MMM-YYYY HH:MM:SS
+Restoring control file from backup
+Restoring datafiles from backup
+Media recovery complete.
+Finished restore at DD-MMM-YYYY HH:MM:SS
+
