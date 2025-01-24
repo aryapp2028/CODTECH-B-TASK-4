@@ -67,3 +67,5 @@ Solution: Restore the database from a full physical backup created with RMAN.
 
 #Output
 
+![Image](https://github.com/user-attachments/assets/c8e51789-4867-4ae0-80a3-ca7f331f193d)
+
